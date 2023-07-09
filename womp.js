@@ -58,8 +58,8 @@ window.addEventListener('load', function(){
 
         }
         draw(context){
-            context.fillStyle = 'white'
-            context.fillRect(this.x, this.y, this.width, this.height);
+            // context.fillStyle = 'white'
+            // context.fillRect(this.x, this.y, this.width, this.height);
             context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height,
                  this.width, this.height, this.x, this.y, this.width, this.height);
             // draw image context would be more used if i uploaded the entire sprite sheet of the png files for player as well as enemies 
@@ -178,7 +178,7 @@ window.addEventListener('load', function(){
 
     let prevAnimation = 0;
     let enemyTime = 0;
-    let enemyInterval = 500;
+    let enemyInterval = 5000;
 
     function animate(timeStamp){
         //deltaTime is difference between timestamp of current and prev loop
