@@ -1,4 +1,5 @@
 
+
 window.addEventListener('load', function(){
     const canvas = document.getElementById('canvas')
     const ctx = canvas.getContext('2d');
@@ -69,9 +70,10 @@ window.addEventListener('load', function(){
             } else if (input.keys.indexOf('ArrowLeft') > -1){
                 this.speed = -5;
                 // jumping animation will be handled relatively the same way
-            } else if (input.keys.indexOf('ArrowUp') > -1){
-                // velocity y
-                this.vy -= 5;
+            } else if (input.keys.indexOf('ArrowUp') > -1 && this.onFloor()){
+                // velocity y, the minus 1 keeps player coming down after jump is executed right when we leave the floor
+                // value are set to keep player from reaching "top" of the game as well
+                this.vy -= 30;
 
             } else {
                 // brings player speed back to zero after initial key movement
