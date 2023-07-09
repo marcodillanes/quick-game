@@ -5,6 +5,8 @@ window.addEventListener('load', function(){
     const ctx = canvas.getContext('2d');
     canvas.width = 1800;
     canvas.height = 820;
+    //want more than one enemy 
+    let enemies = [];
 
 
 
@@ -151,9 +153,22 @@ window.addEventListener('load', function(){
         }
     }
     
-    const enemy = new Enemy(canvas.width, canvas.height);
+    // const enemy = new Enemy(canvas.width, canvas.height);
 
-    function handleEnemy(){
+    function handleEnemy(deltaTime){
+        // enemies.push(new Enemy(canvas.width, canvas.height));
+        if (enemyTime > enemyInterval){
+            enemies.push(new Enemy(canvas.width, canvas.height));
+            enemyTime = 0;
+        } else {
+            enemyTime += deltaTime;
+
+        }
+        enemies.forEach(enemy => {
+            enemy.draw(ctx);
+            enemy.update();
+        })
+
 
     }
 
@@ -161,17 +176,27 @@ window.addEventListener('load', function(){
 
     }
 
-    function animate(){
+    let prevAnimation = 0;
+    let enemyTime = 0;
+    let enemyInterval = 500;
+
+    function animate(timeStamp){
+        //deltaTime is difference between timestamp of current and prev loop
+        const deltaTime = timeStamp - prevAnimation;
+        prevAnimation = timeStamp;
         ctx.clearRect(0,0, canvas.width, canvas.height);
         // draw background first then the player
         background.draw(ctx);
-        background.update();
+        // background.update();
         player.draw(ctx);
         player.update(input);
-        enemy.draw(ctx);
-        enemy.update();
+        // with the empty array this is going to be different
+        // enemy.draw(ctx);
+        // enemy.update();
+        handleEnemy(deltaTime);
         requestAnimationFrame(animate);
+        //request animation frame already sets a timestamp and passes it as an arguement
 
     }
-    animate();
+    animate(0);
 });
