@@ -44,21 +44,36 @@ window.addEventListener('load', function(){
             this.x = 0;
             this.y = this.playerHeight - this.height;
             this.image = document.getElementById('playerCharacter');
+            this.frameX = 0;
+            this.frameY = 0;
+            // speed on its own controls player movement with <1 moving us right and >1(negatives) moving us left
+            //attaching key functions to speed will allow user to control player
+            this.speed = 0;
         }
         draw(context){
             context.fillStyle = 'white'
             context.fillRect(this.x, this.y, this.width, this.height);
             context.drawImage(this.image, this.x, this.y);
+            // draw image context would be more used if i uploaded the entire sprite sheet of the png files for player as well as enemies 
+            // for now for the project deadlines sake its going to be kept super simple since i chose to crop one sprite from the sheet 
         }
-        update(){
-            this.x++;
+        update(input){
+            // input is taken from line 10 and passed here and then to player update in animate function
+            this.x += this.speed;
+            if (input.keys.indexOf('ArrowRight') > -1){
+                this.speed = 5;
+            } else if (input.keys.indexOf('ArrowLeft') > -1){
+                this.speed= -5;
+            } else {
+                // brings player speed back to zero after initial key movement
+                this.speed = 0;
+            }
         }
 
     }
 
     const player = new Player(canvas.width, canvas.height);
-    player.draw(ctx);
-    player.update();
+
 
 
     class Background {
@@ -80,7 +95,7 @@ window.addEventListener('load', function(){
     function animate(){
         ctx.clearRect(0,0, canvas.width, canvas.height);
         player.draw(ctx);
-        player.update();
+        player.update(input);
         requestAnimationFrame(animate);
 
     }
