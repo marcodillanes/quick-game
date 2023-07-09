@@ -2,8 +2,8 @@
 window.addEventListener('load', function(){
     const canvas = document.getElementById('canvas')
     const ctx = canvas.getContext('2d');
-    canvas.width = 800;
-    canvas.height = 720;
+    canvas.width = 1800;
+    canvas.height = 820;
 
 
 
@@ -68,6 +68,8 @@ window.addEventListener('load', function(){
                 // brings player speed back to zero after initial key movement
                 this.speed = 0;
             }
+            if (this.x < 0) this.x = 0;
+            else if (this.x > this.playerWidth - this.width) this.x = this.playerWidth - this.width
         }
 
     }
