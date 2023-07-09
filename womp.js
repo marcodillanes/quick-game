@@ -133,9 +133,26 @@ window.addEventListener('load', function(){
     const background = new Background(canvas.width, canvas.height);
 
     class Enemy {
-
+        constructor(enemyWidth, enemyHeight){
+            this.enemyWidth = enemyWidth;
+            this.enemyHeight = enemyHeight;
+            this.width = 400;
+            this.height = 400;
+            this.image = document.getElementById('enemyCharacter');
+            this.x = this.enemyWidth;
+            this.y = this.enemyHeight - this.height;
+            this.frameX = 0;
+        }
+        draw(context){
+            context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height);
+        }
+        update(){
+            this.x--;
+        }
     }
     
+    const enemy = new Enemy(canvas.width, canvas.height);
+
     function handleEnemy(){
 
     }
@@ -151,6 +168,8 @@ window.addEventListener('load', function(){
         background.update();
         player.draw(ctx);
         player.update(input);
+        enemy.draw(ctx);
+        enemy.update();
         requestAnimationFrame(animate);
 
     }
